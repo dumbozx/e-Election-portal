@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Voters{% endblock %}
+
+{% block content %}
+    <h1>Manage Voters</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Add New Voter</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('manage_voters') }}">
+                        {{ voter_form.hidden_tag() }}
+
+                        <div class="mb-3">
+                            {{ voter_form.user_id.label(class="form-label") }}
+                            {{ voter_form.user_id(class="form-control", placeholder="Enter College ID") }}
+                            {% if voter_form.user_id.errors %}
+                                <div class="text-danger">
+                                    {% for error in voter_form.user_id.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ voter_form.password.label(class="form-label") }}
+                            {{ voter_form.password(class="form-control", placeholder="Enter initial password") }}
+                            {% if voter_form.password.errors %}
+                                <div class="text-danger">
+                                    {% for error in voter_form.password.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            {{ voter_form.is_admin(class="form-check-input") }}
+                            {{ voter_form.is_admin.label(class="form-check-label") }}
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            {{ voter_form.submit(class="btn btn-primary") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Registered Voters</h3>
+                </div>
+                <div class="card-body">
+                    {% if voters %}
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>College ID</th>
+                                        <th>Admin Status</th>
+                                        <th>Votes Cast</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for voter in voters %}
+                                        <tr>
+                                            <td>{{ voter.id }}</td>
+                                            <td>
+                                                {% if voter.is_admin %}
+                                                    <span class="badge bg-success">Admin</span>
+                                                {% else %}
+                                                    <span class="badge bg-secondary">Voter</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ user_vote_counts.get(voter.id, 0) }}</td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <button type="button" class="btn btn-sm btn-outline-primary">Reset Password</button>
+                                                    <button type="button" class="btn btn-sm btn-outline-danger">Delete</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">No voters registered yet.</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

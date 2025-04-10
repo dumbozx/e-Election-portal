@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Results: {{ election.name }} ({{ election.position }})</h1>
+    <p>Election Period: {{ election.start_time.strftime('%Y-%m-%d %H:%M') }} to {{ election.end_time.strftime('%Y-%m-%d %H:%M') }} UTC</p>
+
+    {% if results %}
+        <h2>Vote Summary</h2>
+        <p>Total Votes Cast: {{ total_votes }}</p>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Candidate</th>
+                    <th>Votes Received</th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for candidate_id, data in results.items() %}
+                <tr>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.votes }}</td>
+                    <td>
+                        {% if total_votes > 0 %}
+                            {{ "%.2f"|format(data.percentage) }}%
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {# Add visualization (e.g., bar chart using Chart.js) here if desired #}
+
+    {% else %}
+        <p>No votes were cast in this election, or results are not yet available.</p>
+    {% endif %}
+
+    <a href="{{ url_for('index') }}" class="btn btn-primary mt-3">Back to Dashboard</a>
+    {% if current_user.is_admin %}
+         <a href="{{ url_for('manage_elections') }}" class="btn btn-secondary mt-3">Back to Manage Elections</a>
+    {% endif %}
+
+
+{% endblock %}

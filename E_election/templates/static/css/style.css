@@ -1,0 +1,44 @@
+/* Basic body padding */
+body {
+    padding-top: 0; /* Adjust if navbar becomes fixed */
+    padding-bottom: 70px; /* Ensure footer doesn't overlap content */
+    background-color: #f8f9fa; /* Light grey background */
+}
+
+/* Footer styling */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #e9ecef; /* Slightly darker grey for footer */
+    border-top: 1px solid #dee2e6;
+}
+
+/* Adjust main container padding if footer is fixed */
+main.container {
+    padding-bottom: 80px; /* Add space above the fixed footer */
+}
+
+
+/* Custom alert colors (example) */
+.alert-success {
+    background-color: #d1e7dd;
+    border-color: #badbcc;
+    color: #0f5132;
+}
+
+.alert-danger {
+     background-color: #f8d7da;
+     border-color: #f5c2c7;
+     color: #842029;
+}
+
+/* Improve spacing for form check labels in vote.html */
+.form-check-label {
+    margin-left: 0.5em;
+}
+
+/* Ensure admin table actions don't wrap */
+.table td .btn {
+    margin-right: 2px; /* Spacing between action buttons */
+}

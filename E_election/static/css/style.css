@@ -1,0 +1,83 @@
+/* Custom styles for the election website */
+
+/* Add some padding to the body */
+body {
+    padding-bottom: 20px;
+}
+
+/* College logo header styling */
+.college-logo-header {
+    background-color: #f8f9fa;
+    padding: 15px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 5px;
+}
+
+/* College title styling */
+.college-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #0d6efd; /* Bootstrap primary blue */
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+/* College subtitle styling */
+.college-subtitle {
+    color: #6c757d; /* Bootstrap secondary gray */
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+/* Style for the footer */
+footer {
+    margin-top: 50px;
+    padding: 20px 0;
+    border-top: 1px solid #e5e5e5;
+}
+
+/* Custom styles for election cards */
+.election-card {
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.election-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Styles for vote buttons */
+.btn-vote {
+    min-width: 100px;
+}
+
+/* Styles for results page */
+.results-bar {
+    height: 30px;
+    transition: width 1s ease-in-out;
+}
+
+/* Admin dashboard styles */
+.admin-stat-card {
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.admin-stat-card i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.admin-stat-card .stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.admin-stat-card .stat-label {
+    font-size: 1rem;
+    color: #6c757d;
+}
