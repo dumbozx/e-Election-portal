@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Vote: {{ election.name }}{% endblock %}
+
+{% block content %}
+    <h1>{{ election.name }}</h1>
+    <h2>Vote for: {{ election.position }}</h2>
+    <p class="text-muted">Voting Period: {{ election.start_time.strftime('%Y-%m-%d %H:%M') }} to {{ election.end_time.strftime('%Y-%m-%d %H:%M') }} UTC</p>
+
+    <hr>
+
+    {% if form %}
+        <form method="POST" action="{{ url_for('vote', election_id=election.id) }}" id="voteForm">
+            {{ form.hidden_tag() }} {# CSRF Token #}
+
+            <div class="mb-3">
+                <fieldset>
+                    <legend>Select One Candidate:</legend>
+                    {% if form.candidate_id.errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.candidate_id.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {% for subfield in form.candidate_id %}
+                    <div class="form-check">
+                        {{ subfield(class="form-check-input") }}
+                        {{ subfield.label(class="form-check-label") }}
+                        {# You could add links/modals here to view candidate manifestos #}
+                        {# <a href="#" data-bs-toggle="modal" data-bs-target="#candidateModal{{ subfield.data }}"> (details)</a> #}
+                    </div>
+                    {% endfor %}
+                </fieldset>
+            </div>
+
+            {{ form.submit(class="btn btn-success btn-lg", onclick="return confirmVote();") }} {# Added confirmation JS #}
+            <a href="{{ url_for('index') }}" class="btn btn-secondary ms-2">Cancel</a>
+        </form>
+    {% else %}
+        <div class="alert alert-warning">Voting form could not be loaded.</div>
+    {% endif %}
+
+    {# Optional: Modals for candidate details would go here #}
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        // Simple confirmation dialog before submitting vote
+        function confirmVote() {
+            const selectedCandidate = document.querySelector('input[name="candidate_id"]:checked');
+            if (!selectedCandidate) {
+                alert('Please select a candidate before casting your vote.');
+                return false; // Prevent form submission
+            }
+            const candidateName = selectedCandidate.nextElementSibling.textContent.trim(); // Get label text
+            return confirm(`Are you sure you want to vote for ${candidateName}? This action cannot be undone.`);
+        }
+    </script>
+{% endblock %}

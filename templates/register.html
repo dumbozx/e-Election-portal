@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    <h1>Register New Voter Account</h1>
+    <p class="text-danger">Warning: Please ensure you are eligible to vote before registering.</p>
+    {# Add eligibility criteria here #}
+
+    <div class="row">
+        <div class="col-md-6">
+            <form method="POST" action="{{ url_for('register') }}" class="mb-4">
+                {{ form.hidden_tag() }}
+
+                <div class="mb-3">
+                    {{ form.user_id.label(class="form-label") }}
+                    {{ form.user_id(class="form-control", placeholder="Enter your College ID") }}
+                    {% if form.user_id.errors %}
+                        <div class="text-danger">
+                            {% for error in form.user_id.errors %}
+                                <small>{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.password.label(class="form-label") }}
+                    {{ form.password(class="form-control", placeholder="Choose a secure password") }}
+                    {% if form.password.errors %}
+                        <div class="text-danger">
+                            {% for error in form.password.errors %}
+                                <small>{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.confirm_password.label(class="form-label") }}
+                    {{ form.confirm_password(class="form-control", placeholder="Confirm your password") }}
+                    {% if form.confirm_password.errors %}
+                        <div class="text-danger">
+                            {% for error in form.confirm_password.errors %}
+                                <small>{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h2>Registration Instructions</h2>
+            <p>Please use your official College ID as the User ID.</p>
+            <p>Choose a strong password.</p>
+            <p>[Add any other specific instructions or warnings here]</p>
+            <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a>.</p>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Admin Dashboard</h1>
+    <p>Welcome, {{ current_user.id }}!</p>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Users</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ user_count }}</h5>
+                    <p class="card-text">Total registered users.</p>
+                     <a href="#" class="btn btn-light btn-sm">Manage Users</a> {# Add link later #}
+                </div>
+            </div>
+        </div>
+         <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Elections</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ election_count }}</h5>
+                    <p class="card-text">Total created elections.</p>
+                    <a href="{{ url_for('manage_elections') }}" class="btn btn-light btn-sm">Manage Elections</a>
+                </div>
+            </div>
+        </div>
+         <div class="col-md-4">
+            <div class="card text-dark bg-warning mb-3">
+                <div class="card-header">System Status</div>
+                <div class="card-body">
+                    <h5 class="card-title">Operational</h5>
+                    <p class="card-text">Monitor logs & performance.</p>
+                     <a href="#" class="btn btn-dark btn-sm">View Logs</a> {# Add link later #}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Add more admin tools/links as needed #}
+
+{% endblock %}

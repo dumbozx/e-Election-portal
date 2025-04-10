@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Election Dashboard</h1>
+
+    <hr>
+    <h2><i class="fas fa-vote-yea"></i> Available Elections to Vote In</h2>
+    {% if available_elections %}
+        <ul>
+            {% for election in available_elections %}
+                <li>
+                    <strong>{{ election.name }} ({{ election.position }})</strong> - Ends: {{ election.end_time.strftime('%Y-%m-%d %H:%M') }} UTC
+                    <a href="{{ url_for('vote', election_id=election.id) }}" class="btn btn-sm btn-success ms-2">Vote Now</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No active elections available for you to vote in at this time.</p>
+    {% endif %}
+
+    <hr>
+    <h2><i class="fas fa-check-circle"></i> Elections You Have Voted In</h2>
+    {% if voted_elections %}
+        <ul>
+            {% for election in voted_elections %}
+                <li>
+                    {{ election.name }} ({{ election.position }})
+                    {% if election.end_time.replace(tzinfo=datetime.timezone.utc) < now %}
+                        <a href="{{ url_for('results', election_id=election.id) }}" class="btn btn-sm btn-info ms-2">View Results</a>
+                    {% else %}
+                        <span class="badge bg-secondary ms-2">Voting ended: {{ election.end_time.strftime('%Y-%m-%d %H:%M') }} UTC</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven't voted in any elections yet.</p>
+    {% endif %}
+
+    <hr>
+    <h2><i class="fas fa-calendar-alt"></i> Upcoming Elections</h2>
+    {% if upcoming_elections %}
+        <ul>
+            {% for election in upcoming_elections %}
+                <li>{{ election.name }} ({{ election.position }}) - Starts: {{ election.start_time.strftime('%Y-%m-%d %H:%M') }} UTC</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No upcoming elections scheduled.</p>
+    {% endif %}
+
+     <hr>
+    <h2><i class="fas fa-history"></i> Finished Elections</h2>
+    {% if finished_elections %}
+        <ul>
+            {% for election in finished_elections %}
+                 <li>
+                    {{ election.name }} ({{ election.position }}) - Ended: {{ election.end_time.strftime('%Y-%m-%d %H:%M') }} UTC
+                     <a href="{{ url_for('results', election_id=election.id) }}" class="btn btn-sm btn-info ms-2">View Results</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No elections have finished yet.</p>
+    {% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {# Add specific JS for this page if needed #}
+    <script>
+        // Example: Get current time for display comparison if needed client-side
+        const now = new Date();
+        console.log("Current UTC time:", now.toISOString());
+    </script>
+{% endblock %}
