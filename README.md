@@ -1,6 +1,6 @@
 # E-Elections Portal
 
-A secure and user-friendly electronic voting system developed for Anand International College of Engineering, Jaipur.
+A secure and user-friendly electronic voting system was developed for Anand International College of Engineering, Jaipur.
 
 ![E-Elections Portal](static/images/anand.jpg)
 
